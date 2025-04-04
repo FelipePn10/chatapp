@@ -5,7 +5,7 @@ services:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: companydb
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -14,7 +14,6 @@ services:
   backend:
     image: backend-image # Buildado separadamente ou use um registro
     build:
-      context: ../backend # Caminho relativo ao projeto backend
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
