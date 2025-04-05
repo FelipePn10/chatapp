@@ -226,5 +226,5 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 ## ✉️ Contato
 
-Felipe Panosso - [panossodev@example.com](mailto:felipe@example.com)  
+Felipe Panosso - [panossodev@example.com](mailto:panossodev@example.com)  
 Link do Projeto: [https://github.com/FelipePn19/chatapp](https://github.com/FelipePn10/chatapp)
