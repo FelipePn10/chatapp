@@ -1,54 +1,36 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: chatapp-mysql
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: companydb
     ports:
       - "3309:3306"
-    volumes:
-      - chat-mysql-data:/var/lib/mysql
-    networks:
-      - chatapp-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - chatapp-network
 
   backend:
-    container_name: chatapp-backend
-    image: chatapp-backend-image
     build:
       context: .
-      dockerfile: Dockerfile
-    restart: on-failure
+      dockerfile: Dockerfile.backend
     ports:
       - "8085:8081"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=admin
+      - DB_NAME=companydb
     depends_on:
       mysql:
         condition: service_healthy
     networks:
       - chatapp-network
-    entrypoint: ["/bin/sh", "-c", "./wait-for-it.sh mysql:3306 -- npm start"]
-
-  frontend:
-    container_name: chatapp-frontend
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: on-failure
-    ports:
-      - "3001:3000"
-    depends_on:
-      - backend
-    networks:
-      - chatapp-network
-
-volumes:
-  chat-mysql-data:
 
 networks:
   chatapp-network:

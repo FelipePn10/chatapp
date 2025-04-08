@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# wait-for-it.sh
 
 host="$1"
-shift
+port="$2"
+shift 2
 cmd="$@"
 
-until nc -z ${host}; do
-  echo "Waiting for $host..."
+until nc -z "$host" "$port"; do
+  echo "Aguardando $host:$port..."
   sleep 2
 done
 
